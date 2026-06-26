@@ -13,7 +13,7 @@ interface Props {
 }
 
 const {
-  title = "iam(not)adrian",
+  title = "hey i am adrian",
   description = "Apps, projects and notes by Adrian.",
   image,
   type = "website",
@@ -43,7 +43,10 @@ const imageUrl = image ? new URL(image, site).toString() : undefined;
     <meta property="og:url" content={canonicalUrl} />
     {imageUrl && <meta property="og:image" content={imageUrl} />}
 
-    <meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+    <meta
+      name="twitter:card"
+      content={imageUrl ? "summary_large_image" : "summary"}
+    />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {imageUrl && <meta name="twitter:image" content={imageUrl} />}
