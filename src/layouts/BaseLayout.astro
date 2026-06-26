@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  lang?: string;
+  currentPath?: string;
+}
+
+const {
+  title = "iam(not)adrian",
+  description = "Apps, projects and notes by Adrian.",
+  image,
+  type = "website",
+  lang = "en",
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonicalUrl = new URL(currentPath, site).toString();
+const imageUrl = image ? new URL(image, site).toString() : undefined;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+
+    <meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+  </head>
+
+  <body>
+    <SiteHeader currentPath={currentPath} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+
+  <script>
+    import "../script/scripts.js";
+  </script>
+</html>
