@@ -1,19 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display=swap");
+
 :root {
   /* Layout */
-  --content-width: 30rem;
+  --content-width: 27.5rem;
+  --page-padding: 1.5rem;
+  --page-padding-mobile: 1rem;
+  --page-top-padding: 6.25rem;
+  --page-top-padding-mobile: 3rem;
+  --page-bottom-padding: 1.5rem;
 
   /* Typography */
-  --font-sans: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "Public Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
   --font-serif: "Times New Roman", Times, serif;
-  --font-size-sm: 0.8125rem;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
   --font-size-md: 0.875rem;
-  --font-size-lg: 0.9375rem;
-  --font-weight-regular: 460;
-  --font-weight-bold: 500;
-  --line-height-md: 1.25rem;
-  --line-height-sm: 1rem;
-  --letter-spacing-tight: -0.00563rem;
-  --letter-spacing-heading: -0.00813rem;
+  --font-size-lg: 0.875rem;
+  --font-size-xl: 0.875rem;
+  --font-weight-regular: 340;
+  --font-weight-bold: 420;
+  --line-height-md: 1.3125rem;
+  --line-height-sm: 1.3125rem;
+  --letter-spacing-tight: -0.009375rem;
+  --letter-spacing-heading: -0.009375rem;
 
   /* Colors */
   --color-bg: #fdfdfc;
@@ -59,12 +69,14 @@ html {
 }
 
 body {
-  width: min(100%, var(--content-width));
+  width: min(100%, calc(var(--content-width) + (var(--page-padding) * 2)));
   min-height: 100vh;
   margin: 0 auto;
+  padding: var(--page-top-padding) var(--page-padding) var(--page-bottom-padding);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
   line-height: var(--line-height-md);
   letter-spacing: var(--letter-spacing-tight);
   display: flex;
@@ -73,6 +85,9 @@ body {
   text-autospace: normal;
   text-spacing-trim: space-first;
   text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-synthesis: none;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -82,16 +97,16 @@ h1,
 h2 {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  line-height: normal;
+  line-height: var(--line-height-md);
   letter-spacing: var(--letter-spacing-heading);
 }
 
 h2 {
-  margin-bottom: var(--space-lg);
+  margin-bottom: 0;
 }
 
 p {
-  padding-bottom: var(--space-lg);
+  padding-bottom: 0;
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--font-size-md);
@@ -115,25 +130,32 @@ header {
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-lg);
-  margin: var(--space-4xl) 0 var(--space-lg);
+  margin: 0 0 var(--space-2xl);
 }
 
 header h1 {
   padding-bottom: 0;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   line-height: var(--line-height-md);
   letter-spacing: var(--letter-spacing-tight);
 }
 
 footer {
-  margin: var(--space-4xl) 0 var(--space-lg);
+  margin: var(--space-4xl) 0 0;
   color: var(--color-text);
 }
 
 .intro,
 .blog-intro,
 .blog-section {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+}
+
+.intro p + p,
+.blog-intro p + p,
+.blog-section p + p,
+.prose p + p {
+  margin-top: var(--space-lg);
 }
 
 .site-title {
@@ -149,7 +171,7 @@ footer {
 
 .site-nav__link {
   color: var(--color-text-muted);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   line-height: var(--line-height-md);
   text-decoration-color: transparent;
   text-underline-offset: 0.18rem;
@@ -169,6 +191,8 @@ footer {
 .updated {
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
 }
 
 .time-compare {
@@ -184,7 +208,7 @@ footer {
 }
 
 .stuff-title {
-  margin-bottom: 0.45rem;
+  margin-bottom: var(--space-sm);
   color: var(--color-text-muted);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
@@ -206,7 +230,7 @@ footer {
 .stuff-row {
   grid-template-columns: 0.8fr 2fr;
   gap: var(--space-lg);
-  padding: var(--space-sm) 0;
+  padding: 0.625rem 0;
   cursor: pointer;
 }
 
@@ -251,7 +275,7 @@ footer {
   min-width: 0;
   max-width: 100%;
   color: var(--color-text);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
   line-height: normal;
   letter-spacing: var(--letter-spacing-tight);
@@ -310,7 +334,7 @@ footer {
   padding: 0.34rem 1em;
   color: var(--color-accent);
   font-family: var(--font-serif);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-style: italic;
   line-height: 1;
   white-space: nowrap;
@@ -337,7 +361,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .blog-post__back-arrow {
@@ -357,39 +381,45 @@ footer {
 }
 
 .blog-post__header {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .blog-post__header h1 {
-  margin-bottom: var(--space-sm);
+  margin-bottom: 0;
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-md);
 }
 
 .blog-post__meta {
-  padding-bottom: var(--space-sm);
+  padding-bottom: 0;
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
 .prose {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 
 .prose h2 {
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-sm);
+  margin-top: var(--space-lg);
+  margin-bottom: 0;
 }
 
 .prose ul,
 .prose ol {
-  margin: 0 0 var(--space-lg) var(--space-lg);
+  margin: var(--space-lg) 0 0 var(--space-lg);
 }
 
 .prose li {
-  padding-bottom: var(--space-xs);
+  padding-bottom: 0;
   color: var(--color-text);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
   letter-spacing: var(--letter-spacing-tight);
+}
+
+.prose li + li {
+  margin-top: var(--space-xs);
 }
 
 .prose a {
@@ -399,7 +429,7 @@ footer {
 }
 
 .download-section {
-  margin: var(--space-2xl) 0;
+  margin: var(--space-xl) 0;
 }
 
 .download-file {
@@ -408,7 +438,7 @@ footer {
   grid-template-columns: minmax(0, 1fr) 5.5rem auto;
   align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-md) 0;
+  padding: 0.625rem 0;
   border-top: var(--border-width) solid var(--color-border);
   border-bottom: var(--border-width) solid var(--color-border);
   color: var(--color-text);
@@ -433,7 +463,7 @@ footer {
   flex-wrap: wrap;
   gap: var(--space-xs);
   color: var(--color-text-muted);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   line-height: var(--line-height-md);
 }
 
@@ -459,7 +489,7 @@ footer {
 }
 
 .share-section {
-  margin: var(--space-2xl) 0 0;
+  margin: var(--space-xl) 0 0;
 }
 
 .share-link {
@@ -536,7 +566,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-lg);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
 .share-modal__header h2 {
@@ -572,7 +602,7 @@ footer {
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md) 0;
+  padding: 0.625rem 0;
   border: 0;
   border-bottom: var(--border-width) solid var(--color-border);
   background: transparent;
@@ -588,22 +618,25 @@ footer {
 }
 
 .related-posts {
-  margin-top: var(--space-3xl);
+  margin-top: var(--space-xl);
 }
 
 @media (max-width: 768px) {
   body {
-    width: min(100%, 34rem);
-    padding: var(--space-3xl) clamp(1rem, 4vw, 1.35rem)
-      clamp(1.5rem, 4vw, 1.75rem);
+    width: min(
+      100%,
+      calc(var(--content-width) + (var(--page-padding) * 2))
+    );
+    padding: var(--page-top-padding-mobile) var(--page-padding)
+      var(--page-bottom-padding);
   }
 
   header {
-    margin: 1rem 0 2rem 0;
+    margin: 0 0 var(--space-2xl);
   }
 
   footer {
-    margin: 2rem 0 1rem 0;
+    margin: var(--space-3xl) 0 0;
   }
 
   .site-nav {
@@ -613,18 +646,18 @@ footer {
   .intro,
   .blog-intro,
   .blog-section {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--space-xl);
   }
 
   .blog-post__back-nav,
   .blog-post__header,
   .download-section,
   .share-section {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
   }
 
   .related-posts {
-    margin-top: var(--space-3xl);
+    margin-top: var(--space-xl);
   }
 
   .stuff-row {
@@ -679,7 +712,7 @@ footer {
 @media (max-width: 420px) {
   body {
     width: 100%;
-    padding: var(--space-2xl) 1rem 1.25rem;
+    padding: var(--page-top-padding-mobile) var(--page-padding-mobile) 1.25rem;
   }
 
   header,
