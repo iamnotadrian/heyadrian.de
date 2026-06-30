@@ -125,6 +125,91 @@ abbr,
   font-style: italic;
 }
 
+.inline-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.inline-tooltip__trigger {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.inline-tooltip__content {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.55rem);
+  z-index: 10;
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 0.5rem;
+  background: rgba(17, 17, 17, 0.94);
+  color: #fdfdfc;
+  font-size: var(--font-size-sm);
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: normal;
+  box-shadow: 0 12px 28px rgba(17, 17, 17, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(0.25rem);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.inline-tooltip[data-tooltip-align="left"] .inline-tooltip__content {
+  left: 0;
+  transform: translateX(0) translateY(0.25rem);
+}
+
+.inline-tooltip[data-tooltip-align="right"] .inline-tooltip__content {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(0.25rem);
+}
+
+.inline-tooltip:hover .inline-tooltip__content,
+.inline-tooltip:focus-within .inline-tooltip__content,
+.inline-tooltip.is-open .inline-tooltip__content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.inline-tooltip[data-tooltip-align="left"]:hover .inline-tooltip__content,
+.inline-tooltip[data-tooltip-align="left"]:focus-within .inline-tooltip__content,
+.inline-tooltip[data-tooltip-align="left"].is-open .inline-tooltip__content,
+.inline-tooltip[data-tooltip-align="right"]:hover .inline-tooltip__content,
+.inline-tooltip[data-tooltip-align="right"]:focus-within .inline-tooltip__content,
+.inline-tooltip[data-tooltip-align="right"].is-open .inline-tooltip__content {
+  transform: translateX(0) translateY(0);
+}
+
+.inline-tooltip__trigger:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.18rem;
+}
+
+@media (hover: none) {
+  .inline-tooltip__content {
+    width: min(16rem, calc(100vw - 2rem));
+  }
+}
+
 header {
   display: flex;
   align-items: flex-start;

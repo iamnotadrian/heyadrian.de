@@ -16,7 +16,44 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <p>
       I’m especially interested in personal money management, and simple tools
-      that make life easier.
+      that make life easier. I am currently building
+      <span class="inline-tooltip">
+        <button
+          type="button"
+          class="inline-tooltip__trigger"
+          data-inline-tooltip-trigger
+          aria-expanded="false"
+          aria-describedby="tooltip-whiskr"
+        >
+          Whiskr.
+        </button>
+        <span
+          id="tooltip-whiskr"
+          class="inline-tooltip__content"
+          role="tooltip"
+        >
+          Cat food routine app
+        </span>
+      </span>
+
+      <!-- and <span class="inline-tooltip">
+        <button
+          type="button"
+          class="inline-tooltip__trigger"
+          data-inline-tooltip-trigger
+          aria-expanded="false"
+          aria-describedby="tooltip-greenbacks"
+        >
+          Greenbacks
+        </button>
+        <span
+          id="tooltip-greenbacks"
+          class="inline-tooltip__content"
+          role="tooltip"
+        >
+          Financial planner for students
+        </span>
+      </span>. -->
       <!--Outside of software, I like to touch grass an
       <abbr>CAD</abbr> (Computer Aided Design) and
       <a href="https://www.blender.org/" class="mark"> Blender</a>.-->
@@ -28,7 +65,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <a href="https://www.nafa.de" class="mark">NAFA</a>.
     </p>
 
-    <p>You can't find me on social media because I stopped using it in 2025.</p>
+    <!-- <p>You can't find me on social media because I stopped using it in 2025.</p> -->
   </section>
 
   <section class="stuff" aria-labelledby="stuff-title">

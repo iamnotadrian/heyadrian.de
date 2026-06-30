@@ -2,6 +2,7 @@ const germanyTimeZone = "Europe/Berlin";
 const footerGreetingEl = document.querySelector("[data-footer-greeting]");
 const timeDifferenceEl = document.querySelector("[data-time-difference]");
 const tooltipTimeouts = new WeakMap();
+const inlineTooltipTriggers = document.querySelectorAll("[data-inline-tooltip-trigger]");
 
 const getTimeZoneOffsetMinutes = (date, timeZone) => {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -77,6 +78,121 @@ if (footerGreetingEl || timeDifferenceEl) {
   updateTimeComparison();
   setInterval(updateTimeComparison, 60 * 1000);
 }
+
+const closeInlineTooltips = (exceptTooltip) => {
+  inlineTooltipTriggers.forEach((trigger) => {
+    const tooltip = trigger.closest(".inline-tooltip");
+
+    if (!(tooltip instanceof HTMLElement) || tooltip === exceptTooltip) {
+      return;
+    }
+
+    tooltip.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+  });
+};
+
+const updateInlineTooltipAlignment = (tooltip) => {
+  if (!(tooltip instanceof HTMLElement)) {
+    return;
+  }
+
+  const content = tooltip.querySelector(".inline-tooltip__content");
+
+  if (!(content instanceof HTMLElement)) {
+    return;
+  }
+
+  tooltip.removeAttribute("data-tooltip-align");
+
+  const { left, right } = content.getBoundingClientRect();
+  const viewportPadding = 12;
+
+  if (left < viewportPadding) {
+    tooltip.dataset.tooltipAlign = "left";
+    return;
+  }
+
+  if (right > window.innerWidth - viewportPadding) {
+    tooltip.dataset.tooltipAlign = "right";
+  }
+};
+
+inlineTooltipTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    const tooltip = trigger.closest(".inline-tooltip");
+
+    if (!(tooltip instanceof HTMLElement)) {
+      return;
+    }
+
+    const hasCoarsePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+    if (!hasCoarsePointer) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const isOpen = tooltip.classList.contains("is-open");
+    closeInlineTooltips(tooltip);
+    tooltip.classList.toggle("is-open", !isOpen);
+    trigger.setAttribute("aria-expanded", String(!isOpen));
+
+    if (!isOpen) {
+      updateInlineTooltipAlignment(tooltip);
+    }
+  });
+
+  trigger.addEventListener("blur", () => {
+    const tooltip = trigger.closest(".inline-tooltip");
+
+    if (!(tooltip instanceof HTMLElement)) {
+      return;
+    }
+
+    window.setTimeout(() => {
+      if (!tooltip.contains(document.activeElement)) {
+        tooltip.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    }, 0);
+  });
+
+  trigger.addEventListener("mouseenter", () => {
+    const tooltip = trigger.closest(".inline-tooltip");
+    updateInlineTooltipAlignment(tooltip);
+  });
+
+  trigger.addEventListener("focus", () => {
+    const tooltip = trigger.closest(".inline-tooltip");
+    updateInlineTooltipAlignment(tooltip);
+  });
+});
+
+window.addEventListener("resize", () => {
+  inlineTooltipTriggers.forEach((trigger) => {
+    const tooltip = trigger.closest(".inline-tooltip");
+
+    if (!(tooltip instanceof HTMLElement)) {
+      return;
+    }
+
+    updateInlineTooltipAlignment(tooltip);
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element)) {
+    return;
+  }
+
+  if (event.target.closest(".inline-tooltip")) {
+    return;
+  }
+
+  closeInlineTooltips();
+});
 
 document.querySelectorAll(".deactivated").forEach((link) => {
   link.addEventListener("click", (event) => {
